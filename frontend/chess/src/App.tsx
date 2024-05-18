@@ -20,7 +20,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AuthRoutes />} />
-          {userContext?.id !== null ? (
+          {userContext !== undefined && userContext.id !== null ? (
             <Route path="/home" element={<Landing />} />
           ) : (
             <Route path="/home" element={<AuthRoutes />} />
