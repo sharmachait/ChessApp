@@ -1,34 +1,35 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
 import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import AuthRoutes from './AuthRoutes.tsx';
+import axios from 'axios';
+import Landing from './pages/Landing.tsx';
+import AccountVerification from './pages/AccountVerification.tsx';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useContext } from 'react';
+import { UserContext } from './store/UserContext.jsx';
+
+axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.withCredentials = true;
 
 function App() {
-  const [count, setCount] = useState(0);
+  const userContext = useContext(UserContext);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="h-screen">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<AuthRoutes />} />
+          {userContext?.id !== null ? (
+            <Route path="/home" element={<Landing />} />
+          ) : (
+            <Route path="/home" element={<AuthRoutes />} />
+          )}
+          <Route path="/verify" element={<AccountVerification />} />
+        </Routes>
+      </BrowserRouter>
+      <ToastContainer />
+    </div>
   );
 }
 
