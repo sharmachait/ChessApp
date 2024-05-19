@@ -22,6 +22,9 @@ async function startUp() {
     app.use(bodyParser.json());
     app.use(cookieParser());
     app.use('/auth', authRouter);
+    const server = app.listen(process.env.PORT, () => {
+      console.log(`listening on ${process.env.PORT}`);
+    });
   } catch (e) {
     console.log(e);
   }
