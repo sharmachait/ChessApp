@@ -23,8 +23,8 @@ const RegisterAndLogin = () => {
 
     if (response.status === 201) {
       console.log(response.data.username);
-      // userContext?.setId(response.data.id);
-      // userContext?.setContextUsername(response.data.username);
+      userContext?.setId(response.data.id);
+      userContext?.setContextUsername(response.data.username);
     }
   }
 

@@ -29,6 +29,7 @@ authRouter.post('/register', async (req: Request, res: Response) => {
         role: 'PLAYER',
       },
       select: {
+        username: true,
         id: true,
       },
     });
