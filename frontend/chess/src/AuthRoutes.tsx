@@ -1,17 +1,17 @@
 import { useContext } from 'react';
-import RegisterAndLoginPage from './pages/RegisterAndLogin.tsx';
 // import Home from './pages/Home.jsx';
 import { UserContext } from './store/UserContext.jsx';
-import { useNavigate } from 'react-router-dom';
-
-const AuthRoutes = () => {
-  const navigate = useNavigate();
-
+import { Navigate, useLocation } from 'react-router-dom';
+type AuthRoutesProps = {
+  children: React.ReactNode;
+};
+const AuthRoutes = (props: AuthRoutesProps) => {
+  const location = useLocation();
   const userContext = useContext(UserContext);
-
-  if (userContext?.contextUsername) {
-    navigate('/home');
+  console.log({ idAtAuthRoutes: userContext?.id });
+  if (!userContext?.contextUsername) {
+    return <Navigate to="/" state={{ path: location.pathname }}></Navigate>;
   }
-  return <RegisterAndLoginPage></RegisterAndLoginPage>;
+  return <div>{props.children}</div>;
 };
 export default AuthRoutes;

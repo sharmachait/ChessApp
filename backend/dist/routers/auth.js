@@ -70,13 +70,16 @@ authRouter.get('/profile', AuthMiddleware_1.auth, (req, res) => __awaiter(void 0
             select: {
                 username: true,
                 role: true,
+                id: true,
             },
         });
         if (!user) {
             res.status(404).json({ msg: 'User not found' });
             return;
         }
-        res.status(200).json({ username: user.username, role: user.role });
+        res
+            .status(200)
+            .json({ username: user.username, role: user.role, id: user.id });
         return;
     }
     catch (e) {
@@ -107,7 +110,7 @@ authRouter.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, functi
         }
         let token = jsonwebtoken_1.default.sign({ username: user.username, id: user.id }, process.env.JwtSecret);
         res
-            .cookie('token', token, { sameSite: 'none', secure: true })
+            .cookie('at', token, { sameSite: 'none', secure: true })
             .status(201)
             .json({ id: user.id, username });
     }

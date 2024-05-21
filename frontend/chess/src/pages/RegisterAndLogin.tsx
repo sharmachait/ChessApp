@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import axios from 'axios';
 import { UserContext } from '../store/UserContext.jsx';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -9,8 +10,9 @@ const RegisterAndLogin = () => {
   const [password, setPassword] = useState('');
   const [formMode, setFormMode] = useState('Login');
 
+  const navigate = useNavigate();
+  const location = useLocation();
   const userContext = useContext(UserContext);
-
   async function handleSubmit(
     e: React.MouseEvent<HTMLButtonElement> | KeyboardEvent
   ) {
@@ -20,11 +22,14 @@ const RegisterAndLogin = () => {
   }
   async function login() {
     const response = await axios.post('/auth/login', { username, password });
+    const redirectPath = location.state?.path || '/home';
 
     if (response.status === 201) {
-      console.log(response.data.username);
+      console.log({ data: response.data });
       userContext?.setId(response.data.id);
       userContext?.setContextUsername(response.data.username);
+      console.log({ idInUserContext: userContext?.id }); //undefined
+      navigate(redirectPath, { replace: true });
     }
   }
 

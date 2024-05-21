@@ -15,8 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.auth = exports.validateToken = exports.accessToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 function accessToken(req, res, next) {
-    const cookies = req.signedCookies;
+    const cookies = req.cookies;
     const at = cookies.at;
+    console.log({ at });
     if (!at) {
         const hat = (req.header('Authorization') || '').split('').pop();
         if (!!hat) {

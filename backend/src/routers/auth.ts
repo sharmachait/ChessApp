@@ -60,13 +60,17 @@ authRouter.get('/profile', auth, async (req: Request, res: Response) => {
       select: {
         username: true,
         role: true,
+        id: true,
       },
     });
+
     if (!user) {
       res.status(404).json({ msg: 'User not found' });
       return;
     }
-    res.status(200).json({ username: user.username, role: user.role });
+    res
+      .status(200)
+      .json({ username: user.username, role: user.role, id: user.id });
     return;
   } catch (e) {
     res.status(404).json({ msg: 'User not found' });
@@ -101,7 +105,7 @@ authRouter.post('/login', async (req: Request, res: Response) => {
       process.env.JwtSecret as string
     );
     res
-      .cookie('token', token, { sameSite: 'none', secure: true })
+      .cookie('at', token, { sameSite: 'none', secure: true })
       .status(201)
       .json({ id: user.id, username });
   } catch (e) {

@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+
 export function accessToken(req: Request, res: Response, next: NextFunction) {
-  const cookies = req.signedCookies;
+  const cookies = req.cookies;
   const at = cookies.at;
+  console.log({ at });
   if (!at) {
     //Bearer token
     const hat = ((req.header('Authorization') as string) || '').split('').pop();
