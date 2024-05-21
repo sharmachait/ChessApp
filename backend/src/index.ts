@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
+import { accessToken } from './middlewares/AuthMiddleware';
 require('dotenv').config();
 
 const jwtSecret = process.env.JwtSecret;
@@ -19,8 +20,9 @@ async function startUp() {
         origin: process.env.ClientUrl,
       })
     );
+    app.use(cookieParser(process.env.cookieParserSecret));
     app.use(bodyParser.json());
-    app.use(cookieParser());
+    app.use(accessToken);
     app.use('/auth', authRouter);
     const server = app.listen(process.env.PORT, () => {
       console.log(`listening on ${process.env.PORT}`);

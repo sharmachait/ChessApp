@@ -33,13 +33,20 @@ const RegisterAndLogin = () => {
     if (response.status === 201) {
       userContext?.setId(response.data.id);
       userContext?.setContextUsername(response.data.username);
+      toast.info('Account Registered.', {
+        position: 'top-left',
+        autoClose: false,
+      });
+      setFormMode('Login');
+    } else {
+      toast.info('Registration failed, please retry.', {
+        position: 'top-left',
+        autoClose: false,
+      });
+      setUsername('');
+      setPassword('');
     }
-    toast.info(
-      'An email has been sent to your account, Please follow the steps in the\n' +
-        '          email to verify your account',
-      { position: 'top-left', autoClose: false }
-    );
-    setFormMode('Login');
+    // setFormMode('Login');
   }
 
   function changeMode(e: React.MouseEvent<HTMLButtonElement> | KeyboardEvent) {

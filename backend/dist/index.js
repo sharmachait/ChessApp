@@ -18,6 +18,7 @@ const auth_1 = __importDefault(require("./routers/auth"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const cors_1 = __importDefault(require("cors"));
+const AuthMiddleware_1 = require("./middlewares/AuthMiddleware");
 require('dotenv').config();
 const jwtSecret = process.env.JwtSecret;
 const bcryptsalt = bcryptjs_1.default.genSaltSync(10);
@@ -29,8 +30,9 @@ function startUp() {
                 credentials: true,
                 origin: process.env.ClientUrl,
             }));
+            app.use((0, cookie_parser_1.default)(process.env.cookieParserSecret));
             app.use(body_parser_1.default.json());
-            app.use((0, cookie_parser_1.default)());
+            app.use(AuthMiddleware_1.accessToken);
             app.use('/auth', auth_1.default);
             const server = app.listen(process.env.PORT, () => {
                 console.log(`listening on ${process.env.PORT}`);
