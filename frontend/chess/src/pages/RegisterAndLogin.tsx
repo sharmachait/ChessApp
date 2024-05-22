@@ -26,8 +26,9 @@ const RegisterAndLogin = () => {
 
     if (response.status === 201) {
       console.log({ data: response.data });
+      if(userContext)
       userContext?.setId(response.data.id);
-      userContext?.setContextUsername(response.data.username);
+      userContext?.setContextUsername?(response.data.username);
       console.log({ idInUserContext: userContext?.id }); //undefined
       navigate(redirectPath, { replace: true });
     }
@@ -36,8 +37,8 @@ const RegisterAndLogin = () => {
   async function register() {
     const response = await axios.post('/auth/register', { username, password });
     if (response.status === 201) {
-      userContext?.setId(response.data.id);
-      userContext?.setContextUsername(response.data.username);
+      userContext?.setId?(response.data.id);
+      userContext?.setContextUsername?(response.data.username);
       toast.info('Account Registered.', {
         position: 'top-left',
         autoClose: false,
