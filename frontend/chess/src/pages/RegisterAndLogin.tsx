@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import axios from 'axios';
-import { UserContext } from '../store/UserContext.jsx';
+import { appContext } from '../store/appContext.tsx';
+
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,7 +13,8 @@ const RegisterAndLogin = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const userContext = useContext(UserContext);
+  const context = useContext(appContext);
+
   async function handleSubmit(
     e: React.MouseEvent<HTMLButtonElement> | KeyboardEvent
   ) {
@@ -25,20 +27,18 @@ const RegisterAndLogin = () => {
     const redirectPath = location.state?.path || '/home';
 
     if (response.status === 201) {
-      console.log({ data: response.data });
-      if(userContext)
-      userContext?.setId(response.data.id);
-      userContext?.setContextUsername?(response.data.username);
-      console.log({ idInUserContext: userContext?.id }); //undefined
-      navigate(redirectPath, { replace: true });
+      console.log(redirectPath);
+      //set to some context
+      context?.setUsername(response.data.username);
+      context?.setId(response.data.id);
+
+      navigate(redirectPath);
     }
   }
 
   async function register() {
     const response = await axios.post('/auth/register', { username, password });
     if (response.status === 201) {
-      userContext?.setId?(response.data.id);
-      userContext?.setContextUsername?(response.data.username);
       toast.info('Account Registered.', {
         position: 'top-left',
         autoClose: false,
