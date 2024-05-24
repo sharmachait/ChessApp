@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RegisterAndLogin from './pages/RegisterAndLogin.tsx';
 import AppContext from './store/appContext.tsx';
+import Layout from './pages/Layout.tsx';
 
 axios.defaults.baseURL = 'http://localhost:3000';
 axios.defaults.withCredentials = true;
@@ -19,14 +20,16 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<RegisterAndLogin />} />
-            <Route
-              path="/home"
-              element={
-                <AuthRoutes>
-                  <Landing />
-                </AuthRoutes>
-              }
-            />
+            <Route path="/home" element={<Layout />}>
+              <Route
+                index
+                element={
+                  <AuthRoutes>
+                    <Landing />
+                  </AuthRoutes>
+                }
+              />
+            </Route>
             <Route path="/verify" element={<AccountVerification />} />
           </Routes>
         </BrowserRouter>

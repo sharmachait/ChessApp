@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import { appContext } from '../store/appContext.tsx';
@@ -16,6 +16,11 @@ const RegisterAndLogin = () => {
   const location = useLocation();
   const context = useContext(appContext);
 
+  useEffect(() => {
+    if (context?.id) {
+      navigate('home');
+    }
+  }, []);
   async function handleSubmit(
     e: React.MouseEvent<HTMLButtonElement> | KeyboardEvent
   ) {
