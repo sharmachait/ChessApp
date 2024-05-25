@@ -19,7 +19,16 @@ function App() {
       <AppContext>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<RegisterAndLogin />} />
+            <Route
+              path="/"
+              element={
+                <AuthRoutes>
+                  <Landing />
+                </AuthRoutes>
+              }
+            />
+            <Route path="/register" element={<RegisterAndLogin />} />
+            <Route path="/login" element={<RegisterAndLogin />} />
             <Route path="/home" element={<Layout />}>
               <Route
                 index

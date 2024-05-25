@@ -14,7 +14,9 @@ const AuthRoutes = (props: AuthRoutesProps) => {
   console.log({ idAtAuthRoutes: context?.id });
 
   if (context?.id == undefined) {
-    return <Navigate to="/" state={{ path: location.pathname }}></Navigate>;
+    return (
+      <Navigate to="/login" state={{ path: location.pathname }}></Navigate>
+    );
   }
   return <div>{props.children}</div>;
 };

@@ -32,6 +32,13 @@ export async function validateToken(
       token,
       jwtSecret as string
     )) as unknown as jwtType;
+    console.log(decodedJson);
+    if (decodedJson.username === undefined) {
+      return false;
+    }
+    if (decodedJson.id === undefined) {
+      return false;
+    }
     req.username = decodedJson.username;
     req.id = decodedJson.id;
     return true;

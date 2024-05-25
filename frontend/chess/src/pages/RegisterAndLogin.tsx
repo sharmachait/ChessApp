@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { appContext } from '../store/appContext.tsx';
 
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,7 +13,6 @@ const RegisterAndLogin = () => {
   const [formMode, setFormMode] = useState('Login');
 
   const navigate = useNavigate();
-  const location = useLocation();
   const context = useContext(appContext);
 
   useEffect(() => {
@@ -30,7 +29,7 @@ const RegisterAndLogin = () => {
   }
   async function login() {
     const response = await axios.post('/auth/login', { username, password });
-    const redirectPath = location.state?.path || '/home';
+    const redirectPath = '/home';
 
     if (response.status === 201) {
       console.log(redirectPath);

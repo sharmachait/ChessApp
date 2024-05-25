@@ -114,4 +114,21 @@ authRouter.post('/login', async (req: Request, res: Response) => {
   }
 });
 
+authRouter.post('/logout', auth, async (req: Request, res: Response) => {
+  try {
+    let token = jwt.sign(
+      { username: undefined, id: undefined },
+      process.env.JwtSecret as string
+    );
+    console.log(token);
+    res
+      .cookie('at', token, { sameSite: 'none', secure: true })
+      .status(201)
+      .json({ msg: 'logged out' });
+  } catch (e) {
+    res.status(404).json({ msg: 'User not found' });
+    return;
+  }
+});
+
 export default authRouter;
