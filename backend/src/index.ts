@@ -1,15 +1,13 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import bodyParser from 'body-parser';
 import authRouter from './routers/auth';
 import cookieParser from 'cookie-parser';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+
 import cors from 'cors';
 import { accessToken } from './middlewares/AuthMiddleware';
+import GameManager from './Engine/GameManager';
+import setupSocketServer from './socketServer';
 require('dotenv').config();
-
-const jwtSecret = process.env.JwtSecret;
-const bcryptsalt = bcrypt.genSaltSync(10);
 
 async function startUp() {
   try {
@@ -27,6 +25,8 @@ async function startUp() {
     const server = app.listen(process.env.PORT, () => {
       console.log(`listening on ${process.env.PORT}`);
     });
+    const gameManager = new GameManager([]);
+    await setupSocketServer(server, gameManager);
   } catch (e) {
     console.log(e);
   }

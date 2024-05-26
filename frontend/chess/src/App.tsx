@@ -9,13 +9,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import RegisterAndLogin from './pages/RegisterAndLogin.tsx';
 import AppContext from './store/appContext.tsx';
 import Layout from './pages/Layout.tsx';
+import Game from './pages/Game.tsx';
 
 axios.defaults.baseURL = 'http://localhost:3000';
 axios.defaults.withCredentials = true;
 
 function App() {
   return (
-    <div className="h-screen">
+    <div className="h-screen bg-[#0b132b]">
       <AppContext>
         <BrowserRouter>
           <Routes>
@@ -35,6 +36,14 @@ function App() {
                 element={
                   <AuthRoutes>
                     <Landing />
+                  </AuthRoutes>
+                }
+              />
+              <Route
+                path="/home/game"
+                element={
+                  <AuthRoutes>
+                    <Game />
                   </AuthRoutes>
                 }
               />

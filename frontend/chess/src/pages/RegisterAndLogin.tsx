@@ -67,7 +67,7 @@ const RegisterAndLogin = () => {
   }
 
   return (
-    <div className="bg-[#0b132b] h-svh flex gap-10 items-center justify-center ">
+    <div className="h-svh flex gap-10 items-center justify-center ">
       <img src="../../board.png" className="max-w-72 md:max-w-96 xl:max-w-xl" />
       <div className={'form flex flex-col items-center justify-center mt-20'}>
         <div className="text-purple-200 font-bold text-2xl p-2">Play Chess</div>
