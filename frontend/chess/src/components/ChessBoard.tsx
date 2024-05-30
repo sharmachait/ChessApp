@@ -9,7 +9,7 @@ function ChessBoard(props: chessProps) {
 
   function handleClick(square: Square) {
     if (from === null) {
-      setFrom(square ? square : null);
+      setFrom(square);
     } else {
       console.log({ from: from, to: square });
 
@@ -26,18 +26,23 @@ function ChessBoard(props: chessProps) {
       setFrom(null);
     }
   }
+
   function getPiece(type: PieceSymbol, color: Color): string {
     let piece: string = color + type + '.png';
     return piece;
   }
+
+  const boardToRender = props.isWhite ? board : [...board].reverse();
+
   return (
     <div className="text-white">
-      {board.map((row, i) => {
+      {boardToRender.map((row, i) => {
+        const rowToRender = props.isWhite ? row : [...row].reverse();
         return (
-          <div className="flex" key={i}>
-            {row.map((square, j) => {
-              const sq = (String.fromCharCode(97 + (j % 8)) +
-                '' +
+          <div className="flex" key={props.isWhite ? i : 7 - i}>
+            {rowToRender.map((square, j) => {
+              const adjustedJ = props.isWhite ? j : 7 - j;
+              const sq = (String.fromCharCode(97 + adjustedJ) +
                 (8 - i)) as Square;
               return (
                 <div
@@ -45,7 +50,7 @@ function ChessBoard(props: chessProps) {
                     handleClick(sq);
                   }}
                   className={`w-24 h-24 ${(i + j) % 2 ? 'bg-green-700' : 'bg-yellow-100'} flex justify-center items-center`}
-                  key={j}
+                  key={props.isWhite ? j : 7 - j}
                 >
                   {square ? (
                     <img

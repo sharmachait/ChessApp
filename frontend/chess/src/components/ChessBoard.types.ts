@@ -9,4 +9,5 @@ export type chessProps = {
     >
   >;
   chess: Chess;
+  isWhite: boolean;
 };

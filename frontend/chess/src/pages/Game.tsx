@@ -14,6 +14,7 @@ const Game = () => {
   const [chess, setChess] = useState(new Chess());
   const [board, setBoard] = useState(chess.board());
   const [started, setStarted] = useState(false);
+  const [isWhite, setIsWhite] = useState(true);
 
   useEffect(() => {
     if (socket === null) return;
@@ -25,6 +26,9 @@ const Game = () => {
         case INIT_GAME:
           setStarted(true);
           setBoard(chess.board());
+          if (message?.payload?.color === 'white') {
+            setIsWhite(true);
+          }
           console.log('game initialized');
           break;
         case MOVE:
@@ -61,6 +65,7 @@ const Game = () => {
               setBoard={setBoard}
               socket={socket}
               board={board}
+              isWhite={isWhite}
             ></ChessBoard>
           </div>
           <div className="col-span-2 w-full flex justify-center items-center bg-gray-800">
